@@ -11,8 +11,7 @@ const adminRouter = require("./Routes/AdminRoute.js");
 const orderRouter = require('./Routes/OrderRoute.js');
 const serviceRouter = require('./Routes/serviceRoute.js');
 
-// Connect to MongoDB
-connectDB();
+// We will connect to MongoDB before starting the server below
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -35,7 +34,10 @@ app.use('/api/services', serviceRouter);
 // Error Handling Middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Start Server after connecting to DB
+connectDB().then(() => {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
 });
