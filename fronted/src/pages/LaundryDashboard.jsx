@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { User, MapPin, Phone, Package, ArrowRight } from 'lucide-react';
+import API_URL from '../config';
 
 const LaundryDashboard = () => {
     const { user, login } = useContext(AuthContext); // Can re-use login or create updateProfile in context for simplicity, but let's just do it directly here
@@ -20,7 +21,7 @@ const LaundryDashboard = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('userToken');
-            const { data } = await axios.put('http://localhost:5000/api/users/profile', profileData, {
+            const { data } = await axios.put(`${API_URL}/api/users/profile`, profileData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             localStorage.setItem('userInfo', JSON.stringify(data));

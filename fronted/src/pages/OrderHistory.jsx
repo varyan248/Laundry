@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Package, Clock, CheckCircle, Truck, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
+import API_URL from '../config';
 
 const statuses = ['Pending', 'Picked', 'Washing', 'Out for Delivery', 'Delivered'];
 
@@ -13,7 +14,7 @@ const OrderHistory = () => {
         const fetchOrders = async () => {
             try {
                 const token = localStorage.getItem('userToken');
-                const { data } = await axios.get('http://localhost:5000/api/orders/myorders', {
+                const { data } = await axios.get(`${API_URL}/api/orders/myorders`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 // Sort by newest first

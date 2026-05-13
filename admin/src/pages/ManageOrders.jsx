@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Package, Search, Edit2 } from 'lucide-react';
+import API_URL from '../config';
 
 const ManageOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const ManageOrders = () => {
     const fetchOrders = async () => {
         try {
             const token = localStorage.getItem('adminToken');
-            const { data } = await axios.get('http://localhost:5000/api/orders', {
+            const { data } = await axios.get(`${API_URL}/api/orders`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setOrders(data.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
@@ -28,7 +29,7 @@ const ManageOrders = () => {
     const updateStatus = async (id, newStatus) => {
         try {
             const token = localStorage.getItem('adminToken');
-            await axios.put(`http://localhost:5000/api/orders/${id}/status`, { status: newStatus }, {
+            await axios.put(`${API_URL}/api/orders/${id}/status`, { status: newStatus }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Order status updated');

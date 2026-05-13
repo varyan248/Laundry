@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Plus, Minus, ShoppingCart, Calendar, MapPin } from 'lucide-react';
+import API_URL from '../config';
 
 const Booking = () => {
     const { user } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Booking = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/services');
+                const { data } = await axios.get(`${API_URL}/api/services`);
                 setServices(data);
             } catch (error) {
                 toast.error('Failed to load services');
@@ -57,8 +58,8 @@ const Booking = () => {
                 quantity: item.quantity,
                 subtotal: item.subtotal
             }));
-
-            await axios.post('http://localhost:5000/api/orders', {
+            
+            await axios.post(`${API_URL}/api/orders`, {
                 items,
                 totalAmount,
                 address,

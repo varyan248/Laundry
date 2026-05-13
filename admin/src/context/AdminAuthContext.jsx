@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../config';
 
 export const AdminAuthContext = createContext();
 
@@ -30,7 +31,7 @@ export const AdminAuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const { data } = await axios.post('http://localhost:5000/api/admin/login', { email, password });
+        const { data } = await axios.post(`${API_URL}/api/admin/login`, { email, password });
         localStorage.setItem('adminToken', data.token);
         setAdmin(data);
     };

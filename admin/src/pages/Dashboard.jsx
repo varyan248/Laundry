@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Users, ShoppingBag, DollarSign, TrendingUp } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import API_URL from '../config';
 
 // Mock chart data (since we don't have historical graph data in the DB for now)
 const data = [
@@ -21,7 +22,7 @@ const Dashboard = () => {
         const fetchStats = async () => {
             try {
                 const token = localStorage.getItem('adminToken');
-                const { data } = await axios.get('http://localhost:5000/api/admin/dashboard-stats', {
+                const { data } = await axios.get(`${API_URL}/api/admin/dashboard-stats`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(data);
