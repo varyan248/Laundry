@@ -15,7 +15,23 @@ const serviceRouter = require('./Routes/serviceRoute.js');
 connectDB();
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:5173', 'http://localhost:5174'],
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            'http://localhost:5173',
+            'http://localhost:5174',
+            'https://laundry-seven-plum.vercel.app', // Explicitly allow Vercel
+        ];
+        
+        if (process.env.FRONTEND_URL) {
+            allowedOrigins.push(...process.env.FRONTEND_URL.split(','));
+        }
+
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
