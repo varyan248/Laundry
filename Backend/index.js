@@ -15,7 +15,7 @@ const serviceRouter = require('./Routes/serviceRoute.js');
 connectDB();
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'], // Vite/React ports for User and Admin
+    origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:5173', 'http://localhost:5174'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
